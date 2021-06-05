@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
-import "@api3/airnode-protocol/contracts/AirnodeClient.sol";
+import { AirnodeClient } from "@api3/airnode-protocol/contracts/AirnodeClient.sol";
 
 contract ExampleClient is AirnodeClient {
     mapping(bytes32 => bool) public incomingFulfillments;
