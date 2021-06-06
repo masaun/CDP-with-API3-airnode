@@ -1,11 +1,19 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
-import { Example } from "./ExampleClient.sol";
+import { ExampleClient } from "./ExampleClient.sol";
 
 
 contract CDP {
 
     constructor() public {}
+
+    function lendETH() public returns (bool) {}
+
+    function borrowDAI() public returns (bool) {}
+
+    function repayDAI() public returns (bool) {}
+
+    function withdrawETH() public returns (bool) {}
 
 }
