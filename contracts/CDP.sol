@@ -17,12 +17,17 @@ contract CDP is Ownable {
     uint currentLendId;
     uint currentBorrowId;
 
-    struct Lend {  // Also collateral
+    // @notice - "Lend" also mean "Collateral" and "Deposit"
+    struct Lend {
         uint daiAmountLended;
+        uint startBlock;
+        uint endBlock;
     }
     
     struct Borrow {
         uint wbtcAmountBorrowed;
+        uint startBlock;
+        uint endBlock;
     }
 
     mapping(address => mapping(uint => Lend)) lends;  // User address -> Lend ID 
@@ -100,12 +105,14 @@ contract CDP is Ownable {
         currentLendId++;
         Lend storage lend = lends[msg.sender][currentLendId];
         lend.daiAmountLended = daiAmountLended;
+        lend.startBlock = block.number;
     }
 
     function _borrow(uint wbtcAmountBorrowed) public returns (bool) {
         currentBorrowId++;
         Borrow storage borrow = borrows[msg.sender][currentBorrowId];
         borrow.wbtcAmountBorrowed = wbtcAmountBorrowed;
+        borrow.startBlock = block.number;
     }  
 
 }
