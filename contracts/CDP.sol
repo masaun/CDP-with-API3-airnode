@@ -8,12 +8,15 @@ contract CDP {
 
     constructor() public {}
 
-    function lendBTC() public returns (bool) {}
+    /**
+     * @notice - Using Wrapped BTC (WBTC)
+     */
+    function lendWBTC() public returns (bool) {}
 
     function borrowDAI() public returns (bool) {}
 
     function repayDAI() public returns (bool) {}
 
-    function withdrawBTC() public returns (bool) {}
+    function withdrawWBTC() public returns (bool) {}
 
 }

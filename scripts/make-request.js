@@ -6,9 +6,9 @@ const util = require('../src/util');
 const parameters = require('../src/parameters');
 
 async function main() {
-  const coinId = 'bitcoin';         /// [Note]: BTC price
-  //const coinId = 'dai';       /// [Note]: DAI price
-  //const coinId = 'ethereum';  /// [Note]: ETH price
+  const coinId = 'bitcoin';     /// [Note]: BTC price  (e.g. bitcoin price is 35548 USD)
+  //const coinId = 'dai';       /// [Note]: DAI price  (e.g. dai price is 1 USD)
+  //const coinId = 'ethereum';  /// [Note]: ETH price  (e.g. ethereum price is 2633 USD)
   const wallet = await evm.getWallet();
   const exampleClient = new ethers.Contract(
     util.readFromLogJson('ExampleClient address'),
