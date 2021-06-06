@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
-import { DAI } from "./DAI.sol";
-import { WBTC } from "./WBTC.sol";
+import { DAI } from "./mock-tokens/DAI.sol";
+import { WBTC } from "./mock-tokens/WBTC.sol";
 
 // API3
 import { ExampleClient } from "./ExampleClient.sol";
