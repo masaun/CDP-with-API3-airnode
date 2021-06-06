@@ -8,12 +8,12 @@ contract CDP {
 
     constructor() public {}
 
-    function lendETH() public returns (bool) {}
+    function lendBTC() public returns (bool) {}
 
     function borrowDAI() public returns (bool) {}
 
     function repayDAI() public returns (bool) {}
 
-    function withdrawETH() public returns (bool) {}
+    function withdrawBTC() public returns (bool) {}
 
 }
