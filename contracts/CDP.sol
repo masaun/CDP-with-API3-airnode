@@ -34,9 +34,9 @@ contract CDP is Ownable {
     mapping(address => mapping(uint => Borrow)) borrows;  // User address -> Borrow ID 
 
     // Rate
-    uint interestRateForLending = 5;     // 5 (%)  <- Calculated every block
-    uint interestRateForBorrowing = 10;  // 10 (%) <- Calculated every block
-    uint borrowLimitRate = 50;           // 50 (%) of collateral asset amount
+    uint interestRateForLending = 5;     // APR: 5 (%)  <- Calculated every block
+    uint interestRateForBorrowing = 10;  // APR: 10 (%) <- Calculated every block
+    uint borrowLimitRate = 50;           // APR: 50 (%) of collateral asset amount
 
     DAI public dai;
     WBTC public wbtc;
@@ -80,18 +80,27 @@ contract CDP is Ownable {
         _borrow(borrowWBTCAmount);
     }
 
-    function repayWBTC(uint borrowId, uint repayAmount) public returns (bool) {
-        address borrower = msg.sender;
-        Borrow memory borrow = borrows[borrower][borrowId];
-        uint wbtcAmountBorrowed = borrow.wbtcAmountBorrowed;
+    function repayWBTC(uint borrowId, uint repaymentAmount) public returns (bool) {
+        // Execute repayment
+        wbtc.transferFrom(msg.sender, address(this), repaymentAmount);
 
+        // Save repayment
         _repay(borrowId);
 
-        // [Todo]: Calculate interests amount of borrowing by every block
-        uint interestAmountForBorrowing;
+        // Calculate interests amount of borrowing by every block
+        address borrower = msg.sender;
+        Borrow memory borrow = borrows[borrower][borrowId];
+        uint wbtcAmountBorrowed = borrow.wbtcAmountBorrowed;  // Principle
+        uint startBlock = borrow.startBlock;
+        uint endBlock = borrow.endBlock;
 
-        // [Todo]: Calculate a repayment amount
-        uint repayAmount;  
+        uint OneYearAsSecond = 1 days * 365;
+        uint interestRateForBorrowingPerSecond = interestRateForBorrowing.div(OneYearAsSecond);
+        uint interestRateForBorrowingPerBlock = interestRateForBorrowingPerSecond.mul(15);  // [Note]: 1 block == 15 seconds
+        uint interestAmountForBorrowing = wbtcAmountBorrowed.mul(interestRateForBorrowingPerBlock).div(100).mul(endBlock.sub(startBlock));
+
+        // Update a WBTC amount that msg.sender must repay
+        _updateRepaymentAmount(borrowId, repaymentAmount, interestAmountForBorrowing);
     }
 
     function withdrawDAI(uint lendId, uint withdrawalAmount) public returns (bool) {
@@ -122,6 +131,11 @@ contract CDP is Ownable {
     function _repay(uint borrowId) public returns (bool) {
         Borrow storage borrow = borrows[msg.sender][borrowId];
         borrow.endBlock = block.number;
+    }
+
+    function _updateRepaymentAmount(uint borrowId, uint repaymentAmount, uint interestAmountForBorrowing) public returns (bool) {
+        Borrow storage borrow = borrows[msg.sender][borrowId];
+        borrow.wbtcAmountBorrowed = repaymentAmount.sub(interestAmountForBorrowing);
     }
 
     function _withdraw(uint lendId) public returns (bool) {
