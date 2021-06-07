@@ -80,10 +80,12 @@ contract CDP is Ownable {
         _borrow(borrowWBTCAmount);
     }
 
-    function repayWBTC(uint borrowId) public returns (bool) {
+    function repayWBTC(uint borrowId, uint repayAmount) public returns (bool) {
         address borrower = msg.sender;
         Borrow memory borrow = borrows[borrower][borrowId];
         uint wbtcAmountBorrowed = borrow.wbtcAmountBorrowed;
+
+        _repay(borrowId);
 
         // [Todo]: Calculate interests amount of borrowing by every block
         uint interestAmountForBorrowing;
@@ -92,7 +94,9 @@ contract CDP is Ownable {
         uint repayAmount;  
     }
 
-    function withdrawDAI() public returns (bool) {
+    function withdrawDAI(uint lendId, uint withdrawalAmount) public returns (bool) {
+        _withdraw(lendId);
+
         // [Todo]: Calculate earned-interests amount of lending by every block
         uint interestAmountForLending;
     }
@@ -113,6 +117,16 @@ contract CDP is Ownable {
         Borrow storage borrow = borrows[msg.sender][currentBorrowId];
         borrow.wbtcAmountBorrowed = wbtcAmountBorrowed;
         borrow.startBlock = block.number;
-    }  
+    }
+
+    function _repay(uint borrowId) public returns (bool) {
+        Borrow storage borrow = borrows[msg.sender][borrowId];
+        borrow.endBlock = block.number;
+    }
+
+    function _withdraw(uint lendId) public returns (bool) {
+        Lend storage lend = lends[msg.sender][lendId];
+        lend.endBlock = block.number;
+    }
 
 }
