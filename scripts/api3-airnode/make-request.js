@@ -1,9 +1,9 @@
 require('dotenv').config();
 const ethers = require('ethers');
 const airnodeAbi = require('@api3/airnode-abi');
-const evm = require('../src/evm');
-const util = require('../src/util');
-const parameters = require('../src/parameters');
+const evm = require('../../src/evm');
+const util = require('../../src/util');
+const parameters = require('../../src/parameters');
 
 async function main() {
   const coinId = 'bitcoin';     /// [Note]: BTC price  (e.g. bitcoin price is 35548 USD)
