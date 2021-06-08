@@ -106,7 +106,7 @@ contract CDP is Ownable {
     function withdrawDAI(uint lendId, uint withdrawalAmount) public returns (bool) {
         _withdraw(lendId);
 
-        // [Todo]: Calculate earned-interests amount of lending by every block
+        // Calculate earned-interests amount of lending by every block
         address lender = msg.sender;
         Lend memory lend = lends[lender][lendId];
         uint daiAmountLended = lend.daiAmountLended;  // Principle
@@ -117,6 +117,9 @@ contract CDP is Ownable {
         uint interestRateForLendingPerSecond = interestRateForLending.div(OneYearAsSecond);
         uint interestRateForLendingPerBlock = interestRateForLendingPerSecond.mul(15);  // [Note]: 1 block == 15 seconds
         uint interestAmountForLending = daiAmountLended.mul(interestRateForLendingPerBlock).div(100).mul(endBlock.sub(startBlock));
+
+        // Update a DAI amount that msg.sender lended
+        _updateWithdrawalAmount(lendId, withdrawalAmount, interestAmountForLending);
     }
 
 
@@ -145,6 +148,11 @@ contract CDP is Ownable {
     function _updateRepaymentAmount(uint borrowId, uint repaymentAmount, uint interestAmountForBorrowing) public returns (bool) {
         Borrow storage borrow = borrows[msg.sender][borrowId];
         borrow.wbtcAmountBorrowed = repaymentAmount.sub(interestAmountForBorrowing);
+    }
+
+    function _updateWithdrawalAmount(uint lendId, uint withdrawalAmount, uint interestAmountForLending) public returns (bool) {
+        Lend storage lend = lends[msg.sender][lendId];
+        lend.daiAmountLended = withdrawalAmount.sub(interestAmountForLending);
     }
 
     function _withdraw(uint lendId) public returns (bool) {
