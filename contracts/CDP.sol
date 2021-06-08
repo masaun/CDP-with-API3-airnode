@@ -87,7 +87,7 @@ contract CDP is Ownable {
         // Save repayment
         _repay(borrowId);
 
-        // Calculate interests amount of borrowing by every block
+        // Calculate interest amount of borrowing by every block
         address borrower = msg.sender;
         Borrow memory borrow = borrows[borrower][borrowId];
         uint wbtcAmountBorrowed = borrow.wbtcAmountBorrowed;  // Principle
@@ -107,7 +107,16 @@ contract CDP is Ownable {
         _withdraw(lendId);
 
         // [Todo]: Calculate earned-interests amount of lending by every block
-        uint interestAmountForLending;
+        address lender = msg.sender;
+        Lend memory lend = lends[lender][lendId];
+        uint daiAmountLended = lend.daiAmountLended;  // Principle
+        uint startBlock = lend.startBlock;
+        uint endBlock = lend.endBlock;
+
+        uint OneYearAsSecond = 1 days * 365;
+        uint interestRateForLendingPerSecond = interestRateForLending.div(OneYearAsSecond);
+        uint interestRateForLendingPerBlock = interestRateForLendingPerSecond.mul(15);  // [Note]: 1 block == 15 seconds
+        uint interestAmountForLending = daiAmountLended.mul(interestRateForLendingPerBlock).div(100).mul(endBlock.sub(startBlock));
     }
 
 
