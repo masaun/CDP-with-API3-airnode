@@ -19,7 +19,9 @@
     "fund-master-wallet": "node ./scripts/api3-airnode/fund-master-wallet.js",
     "generate-wallet": "node ./scripts/api3-airnode/generate-wallet.js",
     "make-request": "node ./scripts/api3-airnode/make-request.js",
-    "update-authorizers": "node ./scripts/api3-airnode/update-authorizers.js"
+    "update-authorizers": "node ./scripts/api3-airnode/update-authorizers.js",
+
+    "script:CDP": "node ./scripts/CDP.script.js"
   },
   "dependencies": {
     "@api3/airnode-abi": "^0.1.0",
