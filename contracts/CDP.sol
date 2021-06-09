@@ -18,13 +18,13 @@ contract CDP is Ownable {
     uint currentBorrowId;
 
     // @notice - "Lend" also mean "Collateral" and "Deposit"
-    struct Lend {
+    struct Lend {   // Lend ID
         uint daiAmountLended;
         uint startBlock;
         uint endBlock;
     }
     
-    struct Borrow {
+    struct Borrow {  // Borrow ID 
         uint wbtcAmountBorrowed;
         uint startBlock;
         uint endBlock;

@@ -20,7 +20,6 @@
     "generate-wallet": "node ./scripts/api3-airnode/generate-wallet.js",
     "make-request": "node ./scripts/api3-airnode/make-request.js",
     "update-authorizers": "node ./scripts/api3-airnode/update-authorizers.js",
-
     "script:CDP": "node ./scripts/CDP.script.js"
   },
   "dependencies": {
