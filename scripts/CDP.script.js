@@ -6,6 +6,11 @@ const util = require('../src/util');
 const parameters = require('../src/parameters');
 
 async function main() {
+    console.log('-------------- Make request via API3 --------------')
+    await api3Request()
+}
+
+async function api3Request() {
     const coinId = 'bitcoin';     /// [Note]: BTC price  (e.g. bitcoin price is 35548 USD)
     //const coinId = 'dai';       /// [Note]: DAI price  (e.g. dai price is 1 USD)
     //const coinId = 'ethereum';  /// [Note]: ETH price  (e.g. ethereum price is 2633 USD)
@@ -46,6 +51,10 @@ async function main() {
     console.log(`${coinId} price is ${(await exampleClient.fulfilledData(requestId)) / 1e6} USD`);
 }
 
+
+///-----------
+/// Executor
+///-----------
 main()
     .then(() => process.exit(0))
     .catch((error) => {

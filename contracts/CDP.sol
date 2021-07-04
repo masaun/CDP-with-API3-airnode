@@ -31,7 +31,7 @@ contract CDP is Ownable {
         uint endBlock;
     }
 
-    mapping(address => mapping(uint => Lend)) lends;  // User address -> Lend ID 
+    mapping(address => mapping(uint => Lend)) lends;      // User address -> Lend ID 
     mapping(address => mapping(uint => Borrow)) borrows;  // User address -> Borrow ID 
 
     // Rate
