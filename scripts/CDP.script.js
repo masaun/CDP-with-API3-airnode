@@ -5,6 +5,7 @@ const evm = require('../src/evm');
 const util = require('../src/util');
 const parameters = require('../src/parameters');
 
+/// Global variable
 let BITCOIN_PRICE
 
 
@@ -21,6 +22,9 @@ main()
 async function main() {
     console.log('-------------- Make request via API3 --------------')
     await api3Request()
+
+    console.log('-------------- Workflow of lending/borrowing --------------')
+    
 }
 
 
