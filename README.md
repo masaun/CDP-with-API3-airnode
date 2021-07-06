@@ -1,3 +1,13 @@
+## 【Script】
+```
+npm run script:CDP
+```
+
+
+<br>
+
+<hr>
+
 # Airnode starter
 
 > A starter project for deploying an Airnode and making requests to it

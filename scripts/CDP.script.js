@@ -5,11 +5,28 @@ const evm = require('../src/evm');
 const util = require('../src/util');
 const parameters = require('../src/parameters');
 
+let BITCOIN_PRICE
+
+
+///-----------
+/// Executor
+///-----------
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
+
 async function main() {
     console.log('-------------- Make request via API3 --------------')
     await api3Request()
 }
 
+
+///-------------------------------------
+/// Request price data via API3 oracle
+///-------------------------------------
 async function api3Request() {
     const coinId = 'bitcoin';     /// [Note]: BTC price  (e.g. bitcoin price is 35548 USD)
     //const coinId = 'dai';       /// [Note]: DAI price  (e.g. dai price is 1 USD)
@@ -49,15 +66,8 @@ async function api3Request() {
     await fulfilled(requestId);
     console.log('Request fulfilled');
     console.log(`${coinId} price is ${(await exampleClient.fulfilledData(requestId)) / 1e6} USD`);
+
+    /// Assign Bitcoin price which is retrieved via API3 oracle above
+    BITCOIN_PRICE = await exampleClient.fulfilledData(requestId) / 1e6
+    console.log('=== BITCOIN_PRICE ===', String(BITCOIN_PRICE))
 }
-
-
-///-----------
-/// Executor
-///-----------
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error);
-        process.exit(1);
-    });
