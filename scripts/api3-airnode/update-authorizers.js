@@ -1,8 +1,8 @@
 require('dotenv').config();
 const ethers = require('ethers');
 const airnodeAdmin = require('@api3/airnode-admin');
-const evm = require('../src/evm');
-const parameters = require('../src/parameters');
+const evm = require('../../../src/evm');
+const parameters = require('../../src/parameters');
 
 async function main() {
   const airnode = await evm.getAirnode();

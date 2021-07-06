@@ -18,19 +18,20 @@ contract CDP is Ownable {
     uint currentBorrowId;
 
     // @notice - "Lend" also mean "Collateral" and "Deposit"
-    struct Lend {
+    struct Lend {   // Lend ID
         uint daiAmountLended;
         uint startBlock;
         uint endBlock;
     }
     
-    struct Borrow {
+    struct Borrow {   // Borrow ID 
+        uint lendId;  // Because available borrowing amount is based on lending amount 
         uint wbtcAmountBorrowed;
         uint startBlock;
         uint endBlock;
     }
 
-    mapping(address => mapping(uint => Lend)) lends;  // User address -> Lend ID 
+    mapping(address => mapping(uint => Lend)) lends;      // User address -> Lend ID 
     mapping(address => mapping(uint => Borrow)) borrows;  // User address -> Borrow ID 
 
     // Rate
@@ -77,7 +78,7 @@ contract CDP is Ownable {
 
         wbtc.transfer(borrower, borrowWBTCAmount);
 
-        _borrow(borrowWBTCAmount);
+        _borrow(lendId, borrowWBTCAmount);
     }
 
     function repayWBTC(uint borrowId, uint repaymentAmount) public returns (bool) {
@@ -133,9 +134,10 @@ contract CDP is Ownable {
         lend.startBlock = block.number;
     }
 
-    function _borrow(uint wbtcAmountBorrowed) public returns (bool) {
+    function _borrow(uint lendId, uint wbtcAmountBorrowed) public returns (bool) {
         currentBorrowId++;
         Borrow storage borrow = borrows[msg.sender][currentBorrowId];
+        borrow.lendId = lendId;
         borrow.wbtcAmountBorrowed = wbtcAmountBorrowed;
         borrow.startBlock = block.number;
     }

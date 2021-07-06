@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-const evm = require('../src/evm');
+const evm = require('../../src/evm');
 
 async function main() {
   const providerAdminAddress = (await evm.getWallet()).address;

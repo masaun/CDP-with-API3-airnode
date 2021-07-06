@@ -1,7 +1,7 @@
 require('dotenv').config();
 const ethers = require('ethers');
-const evm = require('../src/evm');
-const util = require('../src/util');
+const evm = require('../../src/evm');
+const util = require('../../../src/util');
 
 async function main() {
   const masterWalletAddress = util.readFromReceipt('masterWalletAddress');
