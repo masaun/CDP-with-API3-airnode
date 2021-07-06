@@ -24,7 +24,11 @@ async function main() {
     await api3Request()
 
     console.log('-------------- Workflow of lending/borrowing --------------')
-    
+    await fundWBTC()
+    await lendDAI()
+    await borrowWBTC()
+    await repayWBTC()
+    await withdrawDAI()
 }
 
 
@@ -74,4 +78,30 @@ async function api3Request() {
     /// Assign Bitcoin price which is retrieved via API3 oracle above
     BITCOIN_PRICE = await exampleClient.fulfilledData(requestId) / 1e6
     console.log('=== BITCOIN_PRICE ===', String(BITCOIN_PRICE))
+}
+
+
+///---------------------------
+/// Workflow of the CDP.sol
+///---------------------------
+
+async function fundWBTC() {
+    console.log('fundWBTC()')
+    /// [Todo]:
+}
+
+async function lendDAI() {
+    console.log('lendDAI()')
+}
+
+async function borrowWBTC() {
+    console.log('borrowWBTC()')
+}
+
+async function repayWBTC() {
+    console.log('repayWBTC()')
+}
+
+async function withdrawDAI() {
+    console.log('withdrawDAI()')
 }
