@@ -45,6 +45,7 @@ async function main() {
     console.log('\n-------------- Create smart contracts instances --------------')
     await deploySmartContracts()
 
+    // [Note]: Commentout the row below temporary for testing another part
     // console.log('\n-------------- Make request via API3 --------------')
     // await api3Request()
 
@@ -144,13 +145,16 @@ async function api3Request() {
 
 async function fundWBTC() {
     console.log('fundWBTC()')
-    const fundWBTCAmount = 10       /// [Todo]: Add toWei() by ether.js
+    const fundWBTCAmount = 10   /// 10 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, fundWBTCAmount)
     let txReceipt2 = await cdp.fundWBTC(fundWBTCAmount)
 }
 
 async function lendDAI() {
     console.log('lendDAI()')
+    const daiAmount = 1000     /// 1000 DAI - [Todo]: Add toWei() by ether.js
+    let txReceipt1 = await dai.approve(CDP_ADDRESS, daiAmount)
+    let txReceipt2 = await cdp.lendDAI(daiAmount)
 }
 
 async function borrowWBTC() {
