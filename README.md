@@ -1,4 +1,5 @@
 ## 【Script】
+- Execute a script of CDP.sol on `Ropsten` testnet (via Infura)
 ```
 npm run script:CDP
 ```
