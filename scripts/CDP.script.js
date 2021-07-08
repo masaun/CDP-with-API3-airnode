@@ -1,4 +1,8 @@
 require('dotenv').config()
+
+/// Hardhat
+const hre = require("hardhat")
+
 const ethers = require('ethers')
 const airnodeAbi = require('@api3/airnode-abi')
 const evm = require('../src/evm')
@@ -7,6 +11,18 @@ const parameters = require('../src/parameters')
 
 /// Global variable
 let BITCOIN_PRICE
+
+let DAI
+let WBTC
+let CDP
+
+let dai
+let wbtc
+let cdp
+
+let DAI_TOKEN
+let WBTC_TOKEN
+let CDP_ADDRESS
 
 
 ///-----------
@@ -20,6 +36,9 @@ main()
     })
 
 async function main() {
+    console.log('-------------- Create smart contracts instances --------------')
+    await deploySmartContracts()
+
     console.log('-------------- Make request via API3 --------------')
     await api3Request()
 
@@ -29,6 +48,33 @@ async function main() {
     await borrowWBTC()
     await repayWBTC()
     await withdrawDAI()
+}
+
+
+///--------------------------------------------------------------
+/// Deploy smart contracts instances and create their instances 
+///--------------------------------------------------------------
+async function deploySmartContracts() {
+    DAI = await hre.ethers.getContractFactory("DAI")
+    WBTC = await hre.ethers.getContractFactory("WBTC")
+    CDP = await hre.ethers.getContractFactory("CDP")
+
+    console.log("Deploy the DAI contract")
+    dai = await DAI.deploy()
+    DAI_TOKEN = dai.address
+
+    console.log("Deploy the WBTC contract")
+    wbtc = await WBTC.deploy()
+    WBTC_TOKEN = wbtc.address
+
+    console.log("Deploy the CDP contract")
+    cdp = await CDP.deploy(DAI_TOKEN, WBTC_TOKEN)
+    CDP_ADDRESS = cdp.address
+    //await cdp.deployed()
+
+    console.log("=== DAI ===", DAI_TOKEN)
+    console.log("=== WBTC ===", WBTC_TOKEN)
+    console.log("=== CDP ===", CDP_ADDRESS)
 }
 
 
