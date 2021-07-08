@@ -12,14 +12,17 @@ const parameters = require('../src/parameters')
 /// Global variable
 let BITCOIN_PRICE
 
+/// Variable for assiging artifacts
 let DAI
 let WBTC
 let CDP
 
+/// Variable for assiging smart contract instance
 let dai
 let wbtc
 let cdp
 
+/// Variable for assiging deployed-addresses
 let DAI_TOKEN
 let WBTC_TOKEN
 let CDP_ADDRESS
@@ -36,10 +39,13 @@ main()
     })
 
 async function main() {
+    console.log('-------------- Setup Wallets (Acccounts) --------------')
+    await setupWallets()
+
     console.log('-------------- Create smart contracts instances --------------')
     await deploySmartContracts()
 
-    console.log('-------------- Make request via API3 --------------')
+    console.log('\n-------------- Make request via API3 --------------')
     await api3Request()
 
     console.log('\n-------------- Workflow of lending/borrowing --------------')
@@ -48,6 +54,11 @@ async function main() {
     await borrowWBTC()
     await repayWBTC()
     await withdrawDAI()
+}
+
+async function setupWallets() {
+    user = process.env.DEPLOYER_ADDRESS
+    console.log("=== user ===", user)
 }
 
 
@@ -134,7 +145,6 @@ async function api3Request() {
 async function fundWBTC() {
     console.log('fundWBTC()')
     /// [Todo]:
-
 }
 
 async function lendDAI() {
