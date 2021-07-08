@@ -39,14 +39,14 @@ main()
     })
 
 async function main() {
-    console.log('-------------- Setup Wallets (Acccounts) --------------')
+    console.log('\n-------------- Setup Wallets (Accounts) --------------')
     await setupWallets()
 
-    console.log('-------------- Create smart contracts instances --------------')
+    console.log('\n-------------- Create smart contracts instances --------------')
     await deploySmartContracts()
 
-    console.log('\n-------------- Make request via API3 --------------')
-    await api3Request()
+    // console.log('\n-------------- Make request via API3 --------------')
+    // await api3Request()
 
     console.log('\n-------------- Workflow of lending/borrowing --------------')
     await fundWBTC()
@@ -144,7 +144,9 @@ async function api3Request() {
 
 async function fundWBTC() {
     console.log('fundWBTC()')
-    /// [Todo]:
+    const fundWBTCAmount = 10       /// [Todo]: Add toWei() by ether.js
+    let txReceipt1 = await wbtc.approve(CDP_ADDRESS, fundWBTCAmount)
+    let txReceipt2 = await cdp.fundWBTC(fundWBTCAmount)
 }
 
 async function lendDAI() {
