@@ -52,6 +52,7 @@ async function main() {
     console.log('\n-------------- Workflow of lending/borrowing --------------')
     await fundWBTC()
     await lendDAI()
+    await getLend()
     await borrowWBTC()
     await repayWBTC()
     await withdrawDAI()
@@ -145,7 +146,7 @@ async function api3Request() {
 
 async function fundWBTC() {
     console.log('fundWBTC()')
-    const fundWBTCAmount = 10   /// 10 WBTC - [Todo]: Add toWei() by ether.js
+    const fundWBTCAmount = 100  /// 100 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, fundWBTCAmount)
     let txReceipt2 = await cdp.fundWBTC(fundWBTCAmount)
 }
@@ -157,8 +158,21 @@ async function lendDAI() {
     let txReceipt2 = await cdp.lendDAI(daiAmount)
 }
 
+async function getLend() {
+    console.log('getLend()')
+    const lendId = 1
+    let lend = await cdp.getLend(lendId)
+    let _daiAmountLended = String(await lend.daiAmountLended)
+    console.log('=== daiAmountLended ===', _daiAmountLended)
+}
+
 async function borrowWBTC() {
     console.log('borrowWBTC()')
+    const lendId = 1
+    const btcPrice = 10          /// [Todo]: Replace BTC price that is retrieved via API3 oracle
+    const borrowWBTCAmount = 10  /// 10 WBTC - [Todo]: Add toWei() by ether.js
+    let txReceipt1 = await wbtc.approve(CDP_ADDRESS, borrowWBTCAmount)
+    let txReceipt2 = await cdp.borrowWBTC(lendId, btcPrice, borrowWBTCAmount)
 }
 
 async function repayWBTC() {

@@ -1,5 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
+pragma experimental ABIEncoderV2;
 
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
@@ -73,7 +74,7 @@ contract CDP is Ownable {
 
         Lend memory lend = lends[borrower][lendId];
         uint daiAmountLended = lend.daiAmountLended;  // Collateralized-amount
-        uint borrowLimit = daiAmountLended.mul(btcPrice).div(1e18).mul(borrowLimitRate).div(100);
+        uint borrowLimit = daiAmountLended.div(btcPrice).mul(borrowLimitRate).div(100);
         require(borrowWBTCAmount <= borrowLimit, "WBTC amount borrowing must be less that the limit amount borrowing");
 
         wbtc.transfer(borrower, borrowWBTCAmount);
@@ -160,6 +161,19 @@ contract CDP is Ownable {
     function _withdraw(uint lendId) public returns (bool) {
         Lend storage lend = lends[msg.sender][lendId];
         lend.endBlock = block.number;
+    }
+
+    ///-----------------------------------
+    /// Getter methods
+    ///-----------------------------------
+    function getLend(uint lendId) public view returns (Lend memory _lend) {
+        Lend memory lend = lends[msg.sender][lendId];
+        return lend;
+    }
+
+    function getBorrow(uint borrowId) public view returns (Borrow memory _borrow) {
+        Borrow memory borrow = borrows[msg.sender][borrowId];
+        return borrow;
     }
 
 }

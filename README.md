@@ -1,9 +1,19 @@
+## 【Compile】
+- Compile by using hardhat
+```
+npm run build
+
+(npx hardhat compile)
+```
+( https://hardhat.org/guides/compile-contracts.html )
+
+<br>
+
 ## 【Script】
 - Execute a script of CDP.sol on `Ropsten` testnet (via Infura)
 ```
 npm run script:CDP
 ```
-
 
 <br>
 
