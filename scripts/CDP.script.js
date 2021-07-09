@@ -185,6 +185,9 @@ async function getRepaymentAmount() {
 
 async function repayWBTC() {
     console.log('repayWBTC()')
+    const borrowId = 1
+    let repaymentAmount = await cdp.getRepaymentAmount(borrowId)
+    let txReceipt = await cdp.repayWBTC(borrowId, repaymentAmount)
 }
 
 async function withdrawDAI() {
