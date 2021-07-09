@@ -54,6 +54,7 @@ async function main() {
     await lendDAI()
     await getLend()
     await borrowWBTC()
+    await getRepaymentAmount()
     await repayWBTC()
     await withdrawDAI()
 }
@@ -173,6 +174,13 @@ async function borrowWBTC() {
     const borrowWBTCAmount = 10  /// 10 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, borrowWBTCAmount)
     let txReceipt2 = await cdp.borrowWBTC(lendId, btcPrice, borrowWBTCAmount)
+}
+
+async function getRepaymentAmount() {
+    console.log('getRepaymentAmount()')
+    const borrowId = 1
+    let repaymentAmount = await cdp.getRepaymentAmount(borrowId)
+    console.log('=== repaymentAmount ===', String(repaymentAmount))
 }
 
 async function repayWBTC() {
