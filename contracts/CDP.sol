@@ -162,4 +162,17 @@ contract CDP is Ownable {
         lend.endBlock = block.number;
     }
 
+    ///-----------------------------------
+    /// Getter methods
+    ///-----------------------------------
+    function getLend(uint lendId) public view returns (Lend _lend) {
+        Lend memory lend = lends[msg.sender][lendId];
+        return lend;
+    }
+
+    function getBorrow(uint borrowId) public view returns (Borrow _borrow) {
+        Borrow memory borrow = borrows[msg.sender][borrowId];
+        return borrow;
+    }
+
 }

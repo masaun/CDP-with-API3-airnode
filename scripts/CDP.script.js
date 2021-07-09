@@ -145,7 +145,7 @@ async function api3Request() {
 
 async function fundWBTC() {
     console.log('fundWBTC()')
-    const fundWBTCAmount = 10   /// 10 WBTC - [Todo]: Add toWei() by ether.js
+    const fundWBTCAmount = 100  /// 100 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, fundWBTCAmount)
     let txReceipt2 = await cdp.fundWBTC(fundWBTCAmount)
 }
@@ -158,7 +158,18 @@ async function lendDAI() {
 }
 
 async function borrowWBTC() {
+    const lendId = 1
+
+    /// [Todo]: In progress
+    console.log('getLend()')
+    let lend = await cdp.getLend(lendId)
+    console.log('=== lend ===', lend)
+
     console.log('borrowWBTC()')
+    const btcPrice = 10          /// [Todo]: Replace BTC price that is retrieved via API3 oracle
+    const borrowWBTCAmount = 10  /// 10 WBTC - [Todo]: Add toWei() by ether.js
+    let txReceipt1 = await wbtc.approve(CDP_ADDRESS, borrowWBTCAmount)
+    let txReceipt2 = await cdp.borrowWBTC(lendId, btcPrice, borrowWBTCAmount)
 }
 
 async function repayWBTC() {
