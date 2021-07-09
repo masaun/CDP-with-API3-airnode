@@ -176,4 +176,19 @@ contract CDP is Ownable {
         return borrow;
     }
 
+    function getRepaymentAmount(uint borrowId) public view returns (uint _repaymentAmount) {
+        Borrow memory borrow = borrows[msg.sender][borrowId];
+        uint _wbtcAmountBorrowed = borrow.wbtcAmountBorrowed;  /// Principle amount borrowed
+        uint _startBlock = borrow.startBlock; 
+        uint currentBlock = block.number;
+
+        uint OneYearAsSecond = 1 days * 365;
+        uint interestRateForBorrowingPerSecond = interestRateForBorrowing.div(OneYearAsSecond);
+        uint interestRateForBorrowingPerBlock = interestRateForBorrowingPerSecond.mul(15);  // [Note]: 1 block == 15 seconds
+        uint interestAmountForBorrowing = _wbtcAmountBorrowed.mul(interestRateForBorrowingPerBlock).div(100).mul(currentBlock.sub(_startBlock));
+
+        uint repaymentAmount = _wbtcAmountBorrowed.add(interestAmountForBorrowing);
+        return repaymentAmount;
+    }
+
 }

@@ -54,6 +54,7 @@ async function main() {
     await lendDAI()
     await getLend()
     await borrowWBTC()
+    await getRepaymentAmount()
     await repayWBTC()
     await withdrawDAI()
 }
@@ -175,10 +176,23 @@ async function borrowWBTC() {
     let txReceipt2 = await cdp.borrowWBTC(lendId, btcPrice, borrowWBTCAmount)
 }
 
+async function getRepaymentAmount() {
+    console.log('getRepaymentAmount()')
+    const borrowId = 1
+    let repaymentAmount = await cdp.getRepaymentAmount(borrowId)
+    console.log('=== repaymentAmount ===', String(repaymentAmount))
+}
+
 async function repayWBTC() {
     console.log('repayWBTC()')
+    const borrowId = 1
+    let repaymentAmount = await cdp.getRepaymentAmount(borrowId)
+    let txReceipt = await cdp.repayWBTC(borrowId, repaymentAmount)
 }
 
 async function withdrawDAI() {
     console.log('withdrawDAI()')
+    const lendId = 1
+    const withdrawalAmount = 1000  /// 1000 DAI
+    let txReceipt = await cdp.withdrawDAI(lendId, withdrawalAmount)
 }
