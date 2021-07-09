@@ -52,6 +52,7 @@ async function main() {
     console.log('\n-------------- Workflow of lending/borrowing --------------')
     await fundWBTC()
     await lendDAI()
+    await getLend()
     await borrowWBTC()
     await repayWBTC()
     await withdrawDAI()
@@ -157,15 +158,17 @@ async function lendDAI() {
     let txReceipt2 = await cdp.lendDAI(daiAmount)
 }
 
-async function borrowWBTC() {
-    const lendId = 1
-
-    /// [Todo]: In progress
+async function getLend() {
     console.log('getLend()')
+    const lendId = 1
     let lend = await cdp.getLend(lendId)
-    console.log('=== lend ===', lend)
+    let _daiAmountLended = String(await lend.daiAmountLended)
+    console.log('=== daiAmountLended ===', _daiAmountLended)
+}
 
+async function borrowWBTC() {
     console.log('borrowWBTC()')
+    const lendId = 1
     const btcPrice = 10          /// [Todo]: Replace BTC price that is retrieved via API3 oracle
     const borrowWBTCAmount = 10  /// 10 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, borrowWBTCAmount)
