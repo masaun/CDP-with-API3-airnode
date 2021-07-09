@@ -192,4 +192,7 @@ async function repayWBTC() {
 
 async function withdrawDAI() {
     console.log('withdrawDAI()')
+    const lendId = 1
+    const withdrawalAmount = 1000  /// 1000 DAI
+    let txReceipt = await cdp.withdrawDAI(lendId, withdrawalAmount)
 }
