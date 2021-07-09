@@ -1,5 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
+pragma experimental ABIEncoderV2;
 
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
@@ -165,12 +166,12 @@ contract CDP is Ownable {
     ///-----------------------------------
     /// Getter methods
     ///-----------------------------------
-    function getLend(uint lendId) public view returns (Lend _lend) {
+    function getLend(uint lendId) public view returns (Lend memory _lend) {
         Lend memory lend = lends[msg.sender][lendId];
         return lend;
     }
 
-    function getBorrow(uint borrowId) public view returns (Borrow _borrow) {
+    function getBorrow(uint borrowId) public view returns (Borrow memory _borrow) {
         Borrow memory borrow = borrows[msg.sender][borrowId];
         return borrow;
     }
