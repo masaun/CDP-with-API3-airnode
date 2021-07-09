@@ -74,7 +74,7 @@ contract CDP is Ownable {
 
         Lend memory lend = lends[borrower][lendId];
         uint daiAmountLended = lend.daiAmountLended;  // Collateralized-amount
-        uint borrowLimit = daiAmountLended.mul(btcPrice).div(1e18).mul(borrowLimitRate).div(100);
+        uint borrowLimit = daiAmountLended.div(btcPrice).mul(borrowLimitRate).div(100);
         require(borrowWBTCAmount <= borrowLimit, "WBTC amount borrowing must be less that the limit amount borrowing");
 
         wbtc.transfer(borrower, borrowWBTCAmount);

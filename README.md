@@ -1,7 +1,9 @@
 ## 【Compile】
 - Compile by using hardhat
 ```
-npx hardhat compile
+npm run build
+
+(npx hardhat compile)
 ```
 ( https://hardhat.org/guides/compile-contracts.html )
 
