@@ -132,10 +132,10 @@ async function api3Request() {
     }
     await fulfilled(requestId)
     console.log('Request fulfilled')
+    console.log('Retrieve current BTC price')
     console.log(`${coinId} price is ${(await exampleClient.fulfilledData(requestId)) / 1e6} USD`)
 
     /// Assign Bitcoin price which is retrieved via API3 oracle above
-    console.log('Retrieve current BTC price')
     BITCOIN_PRICE = await exampleClient.fulfilledData(requestId) / 1e6
     console.log('=== BITCOIN_PRICE ===', String(BITCOIN_PRICE))
 }
