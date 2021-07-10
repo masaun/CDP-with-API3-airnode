@@ -45,9 +45,8 @@ async function main() {
     console.log('\n-------------- Create smart contracts instances --------------')
     await deploySmartContracts()
 
-    // [Note]: Commentout the row below temporary for testing another part
-    // console.log('\n-------------- Make request via API3 --------------')
-    // await api3Request()
+    console.log('\n-------------- Make request via API3 airnode (oracle) --------------')
+    await api3Request()
 
     console.log('\n-------------- Workflow of lending/borrowing --------------')
     await fundWBTC()
@@ -133,6 +132,7 @@ async function api3Request() {
     }
     await fulfilled(requestId)
     console.log('Request fulfilled')
+    console.log('Retrieve current BTC price')
     console.log(`${coinId} price is ${(await exampleClient.fulfilledData(requestId)) / 1e6} USD`)
 
     /// Assign Bitcoin price which is retrieved via API3 oracle above
@@ -154,7 +154,7 @@ async function fundWBTC() {
 
 async function lendDAI() {
     console.log('lendDAI()')
-    const daiAmount = 1000     /// 1000 DAI - [Todo]: Add toWei() by ether.js
+    const daiAmount = 1000000     /// 1,000,000 DAI - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await dai.approve(CDP_ADDRESS, daiAmount)
     let txReceipt2 = await cdp.lendDAI(daiAmount)
 }
@@ -170,8 +170,9 @@ async function getLend() {
 async function borrowWBTC() {
     console.log('borrowWBTC()')
     const lendId = 1
-    const btcPrice = 10          /// [Todo]: Replace BTC price that is retrieved via API3 oracle
-    const borrowWBTCAmount = 10  /// 10 WBTC - [Todo]: Add toWei() by ether.js
+    const btcPrice = BITCOIN_PRICE  /// This BTC price is retrieved by API3 oracle
+    //const btcPrice = 34054        /// [Test]: 1 BTC == 34,054 USD
+    const borrowWBTCAmount = 10     /// 10 WBTC - [Todo]: Add toWei() by ether.js
     let txReceipt1 = await wbtc.approve(CDP_ADDRESS, borrowWBTCAmount)
     let txReceipt2 = await cdp.borrowWBTC(lendId, btcPrice, borrowWBTCAmount)
 }
@@ -193,6 +194,6 @@ async function repayWBTC() {
 async function withdrawDAI() {
     console.log('withdrawDAI()')
     const lendId = 1
-    const withdrawalAmount = 1000  /// 1000 DAI
+    const withdrawalAmount = 1000000  /// 1,000,000 DAI
     let txReceipt = await cdp.withdrawDAI(lendId, withdrawalAmount)
 }
