@@ -2,12 +2,12 @@
 ## Introduction of the CDP with the API3 airnode
 - This is the smart contract that the structure of `CDP` ( `Collateralized Debt Positionn` ) with API3 is implemented.
   - In this CDP structure, 4 steps below is executed: 
-    - 1. A user lend (deposit) DAI as a collateral into the Pool (the CDP contract).
-    - 2. A user borrow WBTC based on the Bitcoin price (USD per BTC) 
+    - ① A user lend (deposit) DAI as a collateral into the Pool (the CDP contract).
+    - ② A user borrow WBTC based on the Bitcoin price (USD per BTC) 
       - At this time, API3 airnode works as oracle for retriving the price feed of Bitcoin (BTC) price.
       - Based on the Bitcoin price (USD per BTC), borrowing limit is determined.
-    - 3. A user repay WBTC borrowed + Interest.
-    - 4. A user withdraw DAI lended (deposited).
+    - ③ A user repay WBTC borrowed + Interest.
+    - ④ A user withdraw DAI lended (deposited).
 
 <br>
 
