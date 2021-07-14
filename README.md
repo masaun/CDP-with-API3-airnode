@@ -1,25 +1,6 @@
-## 【Compile】
-- Compile by using hardhat
-```
-npm run build
+# CDP with the API3 airnode
+(Note: `CDP` is ``"Collateralized Debt Positionn"` )
 
-(npx hardhat compile)
-```
-( https://hardhat.org/guides/compile-contracts.html )
-
-<br>
-
-## 【Script】
-- Execute a script of CDP.sol on `Ropsten` testnet (via Infura)
-```
-npm run script:CDP
-```
-
-<br>
-
-<hr>
-
-# Airnode starter
 
 > A starter project for deploying an Airnode and making requests to it
 
@@ -196,27 +177,38 @@ Note that now that the price is on-chain, you can use it in your contract to imp
 Try replacing the `coinId` value in [`make-request.js`](/scripts/make-request.js) from `"ethereum"` to `"bitcoin"` and make another request.
 You can see the API docs to find out which coin IDs are supported.
 
-## Conclusion
+<br>
 
-You deployed an Airnode, made a request to it and received the response at the contract.
-If you want to learn more, see the following resources:
-
-- [API3 whitepaper](https://github.com/api3dao/api3-whitepaper) will give you a broad overview of the project
-- [Medium posts](https://api3dao.github.io/api3-docs/pages/medium.html) are a more digestible version of the whitepaper
-- [API3 docs](https://api3dao.github.io/api3-docs/pre-alpha/) will provide you with the theory of how Airnode and its protocol works
-- [@api3/airnode-admin](https://github.com/api3dao/airnode/tree/pre-alpha/packages/admin) lets you interact with the Airnode contract (to create a request, endorse a client, etc.) using a CLI tool
-- [Airnode client examples](https://github.com/api3dao/airnode-client-examples) demonstrate different request patterns that the Airnode protocol supports (for example, we used a full request in this starter project)
-
-## Taking down your Airnode
-
-It is very unlikely for you to forget to take down your Airnode because it is designed to be *set-and-forget*.
-When you are done with this project, go to `config/` as your working directory and use the command below where `$RECEIPT_FILENAME` is replaced with the name of your receipt file ending with `.receipt.json` (you can refer to our [Docker instructions](https://github.com/api3dao/airnode/blob/pre-alpha/Docker.md) for more information)
-
-```sh
-docker run -it --rm \
-  --env-file .env \
-  --env COMMAND=remove-with-receipt \
-  --env RECEIPT_FILENAME=$RECEIPT_FILENAME \
-  -v $(pwd):/airnode/out \
-  api3/airnode-deployer:pre-alpha
+## Compile
+- Compile by using hardhat
 ```
+npm run build
+
+(npx hardhat compile)
+```
+
+<br>
+
+## Script which sbow the demo
+- Execute a script of CDP.sol on `Ropsten` testnet (via Infura)
+```
+npm run script:CDP
+```
+
+<br>
+
+<hr>
+
+## References
+- API3
+  - Document for the Airnode: https://docs.api3.org/pre-alpha/airnode/design-philosophy.html
+
+  - API3 X Sovrython - External Data For BTC
+    https://gitcoin.co/issue/api3dao/airnode/368/100025805
+    ( https://medium.com/api3/build-with-api3-at-sovrython-8d6774d5ede2 )
+
+<br>
+
+- Compile of the hardhat 
+https://hardhat.org/guides/compile-contracts.html
+
