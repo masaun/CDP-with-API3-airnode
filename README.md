@@ -11,6 +11,12 @@
 
 <br>
 
+## Diagram (Workflow)  
+- Diagram that this workflow is written.  
+![diagram_CDP-with-API3-airnode](https://user-images.githubusercontent.com/19357502/125932264-305617ba-bdc8-4c16-a731-1c5969ce47c7.jpg)
+
+<br>
+
 <hr>
 
 > A starter project for deploying an Airnode and making requests to it
